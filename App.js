@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, Alert, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, Alert, KeyboardAvoidingView, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 
 export default function App() {
   const [numeroSecreto, setNumeroSecreto] = useState(gerarNumeroAleatorio());
@@ -34,13 +34,17 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <Text style={styles.title}>Acerte o Número (1 a 100)</Text>
 
       <TextInput
         style={styles.input}
         keyboardType="numeric"
         placeholder="Digite seu palpite"
+        placeholderTextColor={'#aaa'}
         value={palpite}
         onChangeText={setPalpite}
       />
@@ -54,14 +58,15 @@ export default function App() {
       <View style={styles.reload}>
         <Button title="Jogar Novamente" onPress={reload} />
       </View>
-    </View>
+
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#333',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
@@ -69,6 +74,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     marginBottom: 20,
+    color:'#cdf80cff'
   },
   input: {
     borderWidth: 1,
@@ -85,7 +91,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   reload: {
-    width:'100%',
+    width:'80%',
     position:'absolute',
     bottom:0,
     padding:15,
@@ -94,5 +100,7 @@ const styles = StyleSheet.create({
     borderColor:'#9c9c9c',
     borderRadius:10,
     backgroundColor: '#999',
-  }
+  },
+
+
 });
